@@ -2,7 +2,7 @@
 // pages/simple-pdf.js
 
 import { useState } from 'react';
-import Header from '../components/header';
+import Header from '../../components/header';
 
 export default function SimplePDF() {
   const [file, setFile] = useState(null);

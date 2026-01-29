@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import ChartJSLoader from '../components/ChartJSLoader';
-import SmartBlurb from '../components/SmartBlurb';
-import ExtractionDebugger from '../components/ExtractionDebugger';
-import { AIMedicalParser, DynamicReportRenderer } from '../lib/ai-medical-parser';
-import { PDFPageExtractor } from '../lib/pdf-page-extractor';
+import ChartJSLoader from '../../components/ChartJSLoader';
+import SmartBlurb from '../../components/SmartBlurb';
+import ExtractionDebugger from '../../components/ExtractionDebugger';
+import { AIMedicalParser, DynamicReportRenderer } from '../../lib/ai-medical-parser';
+import { PDFPageExtractor } from '../../lib/pdf-page-extractor';
 
 export default function DigestiveAI() {
   const [gutData, setGutData] = useState(null);

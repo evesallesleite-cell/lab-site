@@ -1,40 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 🔬 Lab Site - AI-Powered Health Analysis Platform
 
-## Getting Started
+A sophisticated health analysis platform built with Next.js that uses AI to analyze blood tests, genetic data, and gut health reports.
 
-First, run the development server:
+## 🏥 Features
+
+- **Blood Test Analysis** - AI-powered insights for lab results with personalized recommendations
+- **Genetic Analysis** - DNA analysis across cardiovascular, metabolism, and other health categories
+- **Gut Health Analysis** - Intestinal/microbiome assessment from medical reports
+- **Whoop Integration** - Fitness tracker data analysis and recovery metrics
+- **PDF Processing** - Extract and analyze data from medical reports
+- **Data Visualization** - Interactive charts for health metrics
+
+## 🔐 Private Access
+
+This site is password protected. Access requires an access code which is shared privately.
+
+## 🚀 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+2. Click "Add New Project"
+3. Import from GitHub: `evesallesleite-cell/lab-site`
+4. Click "Deploy"
+
+### Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+OPENAI_API_KEY=your_openai_api_key_here
+AI_MODEL=gpt-4o-mini
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Development
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+# Install dependencies
+npm install
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# Run development server
+npm run dev
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+# Build for production
+npm run build
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Start production server
+npm start
+```
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- `pages/` - Next.js pages and API routes
+- `components/` - React components
+- `lib/` - Utility functions and AI modules
+- `public/` - Static assets
+- `styles/` - Global styles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## 🤝 Collaboration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This repository uses a collaborative development workflow:
+1. Eve creates feature branches for improvements
+2. Changes are reviewed before merging to main
+3. Only approved changes are pushed to production
 
-## Deploy on Vercel
+## 📄 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Private - All rights reserved

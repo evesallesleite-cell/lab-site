@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { SMART_BLURB_PROMPT, GENETIC_ANALYSIS_MAX_TOKENS, GUT_HEALTH_MAX_TOKENS } from "../../lib/ai-prompts";
+import { SMART_BLURB_PROMPT, GENETIC_ANALYSIS_MAX_TOKENS, GUT_HEALTH_MAX_TOKENS } from "../../../lib/ai-prompts";
 
 // Initialize Supabase client
 const supabase = createClient(
