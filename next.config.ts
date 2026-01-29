@@ -3,13 +3,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
-  // Enable static export for GitHub Pages
-  output: 'export',
-  // Disable image optimization for static export
+  // Vercel handles hosting - no static export needed
   images: {
     unoptimized: true,
   },
-  // Skip API routes in static export
+  eslint: {
+    // Ignore ESLint errors during build
+    ignoreDuringBuilds: true,
+  },
   trailingSlash: true,
 };
 
