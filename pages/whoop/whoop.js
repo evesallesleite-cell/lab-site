@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 const Header = dynamic(() => import("../../components/header"), { ssr: false });
 
 // Create a wrapper component for charts that handles all edge cases
-const SafeBarChart = dynamic(() => import('../components/SafeBarChart'), { ssr: false });
-const SafeStackedBarChart = dynamic(() => import('../components/SafeStackedBarChart'), { ssr: false });
-const SafeLineChart = dynamic(() => import('../components/SafeLineChart'), { ssr: false });
+const SafeBarChart = dynamic(() => import('../../components/SafeBarChart'), { ssr: false });
+const SafeStackedBarChart = dynamic(() => import('../../components/SafeStackedBarChart'), { ssr: false });
+const SafeLineChart = dynamic(() => import('../../components/SafeLineChart'), { ssr: false });
 
 export default function Whoop() {
   const router = useRouter();

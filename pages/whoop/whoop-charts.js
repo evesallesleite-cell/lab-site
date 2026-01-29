@@ -9,7 +9,7 @@ const Bar = dynamic(() => import('react-chartjs-2').then(mod => ({ default: mod.
 const Line = dynamic(() => import('react-chartjs-2').then(mod => ({ default: mod.Line })), { ssr: false });
 
 // Register Chart.js components
-const ChartJSLoader = dynamic(() => import('../components/ChartJSLoader'), { ssr: false });
+const ChartJSLoader = dynamic(() => import('../../components/ChartJSLoader'), { ssr: false });
 
 export default function WhoopCharts() {
   const router = useRouter();
