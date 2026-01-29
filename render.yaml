@@ -1,0 +1,8 @@
+{
+  "name": "lab-site",
+  "repo": "https://github.com/evesallesleite-cell/lab-site",
+  "branch": "main",
+  "buildCommand": "npm install && npm run build",
+  "startCommand": "npm start",
+  "envVars": []
+}
