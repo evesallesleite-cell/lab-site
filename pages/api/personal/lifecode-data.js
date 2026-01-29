@@ -1,14 +1,22 @@
 // API to fetch LifeCode/genetic data from Supabase
-import { createClient } from "@supabase/supabase-js";
+import { createOptionalClient, isSupabaseConfigured } from '../../../lib/supabase-optional';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+const supabase = createOptionalClient();
 
 export default async function handler(req, res) {
   try {
     console.log("[/api/personal/lifecode-data] start");
+    
+    // Return demo data if Supabase not configured
+    if (!isSupabaseConfigured()) {
+      return res.status(200).json({
+        demo: true,
+        message: 'Supabase not configured - showing demo data',
+        items: [],
+        categories: [],
+        summary: { totalItems: 0 }
+      });
+    }
     
     // Fetch LifeCode results
     const { data, error } = await supabase

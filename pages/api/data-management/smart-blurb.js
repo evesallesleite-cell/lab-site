@@ -1,11 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
+import { createOptionalClient, isSupabaseConfigured } from "../../../lib/supabase-optional";
 import { SMART_BLURB_PROMPT, GENETIC_ANALYSIS_MAX_TOKENS, GUT_HEALTH_MAX_TOKENS } from "../../../lib/ai-prompts";
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+// Initialize Supabase client (optional)
+const supabase = createOptionalClient();
 
 // Metabase configuration
 const METABASE_URL = process.env.METABASE_URL;
