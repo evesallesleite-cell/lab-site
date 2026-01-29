@@ -18,6 +18,16 @@ export default function HomePage() {
 
   const categories = [
     {
+      title: "🤖 Eve AI",
+      description: "Your personal health AI assistant with proactive insights",
+      icon: "🤖",
+      color: "from-indigo-500 to-purple-600",
+      items: [
+        { name: "Chat with Eve", href: "/eve", description: "Ask questions about your health data, supplements, and get personalized recommendations" },
+        { name: "Proactive Insights", href: "/eve-insights", description: "AI-powered analysis of your WHOOP, blood tests, and supplement data" }
+      ]
+    },
+    {
       title: "Whoop Data",
       description: "Sleep, strain, and recovery insights from your Whoop device",
       icon: "⌚",
