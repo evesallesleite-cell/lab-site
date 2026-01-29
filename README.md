@@ -24,9 +24,11 @@ This site is password protected. Access requires an access code which is shared 
 3. Import from GitHub: `evesallesleite-cell/lab-site`
 4. Click "Deploy"
 
+**Note:** If deployment fails with secret errors, disconnect and reconnect the repository to clear cached configuration.
+
 ### Environment Variables
 
-Copy `.env.example` to `.env.local` and fill in:
+Copy `.env.example` to `.env.local` and fill in (optional for demo mode):
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
