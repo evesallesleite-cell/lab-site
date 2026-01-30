@@ -1,16 +1,31 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    // Redirect to /login if already logged in
+    if (typeof window !== "undefined") {
+      const hasLocalStorage = localStorage.getItem("loggedIn") === "true";
+      const hasCookie = document.cookie.split(';').some(c => c.trim().startsWith('lab-access='));
+      if (hasLocalStorage || hasCookie) {
+        router.push("/home");
+      }
+    }
+  }, [router]);
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return alert("Enter an email");
     // demo login — sets flag used by Header
-    if (typeof window !== "undefined") localStorage.setItem("loggedIn", "true");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("loggedIn", "true");
+      document.cookie = "lab-access=lab2024; path=/; max-age=31536000";
+    }
     router.push("/home");
   }
 

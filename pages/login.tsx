@@ -1,10 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    // Redirect to /home if already logged in
+    if (typeof window !== "undefined") {
+      const hasLocalStorage = localStorage.getItem("loggedIn") === "true";
+      const hasCookie = document.cookie.split(';').some(c => c.trim().startsWith('lab-access='));
+      if (hasLocalStorage || hasCookie) {
+        router.push("/home");
+      }
+    }
+  }, [router]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -16,8 +27,11 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      // Set cookie and redirect
-      document.cookie = 'lab-access=lab2024; path=/; max-age=31536000'; // 1 year
+      // Set cookie and localStorage, then redirect
+      if (typeof window !== "undefined") {
+        localStorage.setItem("loggedIn", "true");
+        document.cookie = 'lab-access=lab2024; path=/; max-age=31536000';
+      }
       router.push('/home');
     } else {
       setError('Invalid password');

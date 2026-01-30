@@ -8,10 +8,13 @@ export default function HomePage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+      // Check both localStorage and cookie for backward compatibility
+      const hasLocalStorage = localStorage.getItem("loggedIn") === "true";
+      const hasCookie = document.cookie.split(';').some(c => c.trim().startsWith('lab-access='));
+      const isLoggedIn = hasLocalStorage || hasCookie;
       setLoggedIn(isLoggedIn);
       if (!isLoggedIn) {
-        router.push("/");
+        router.push("/login");
       }
     }
   }, [router]);
