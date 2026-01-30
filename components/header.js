@@ -11,15 +11,16 @@ export default function Header() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Check cookie for authentication (same as middleware)
-      const cookies = document.cookie.split(';');
-      const hasLabAccess = cookies.some(c => c.trim().startsWith('lab-access=eve123'));
-      setLoggedIn(hasLabAccess);
+      // Check localStorage for authentication
+      const isLoggedIn = localStorage.getItem('lab-logged-in') === 'true';
+      setLoggedIn(isLoggedIn);
     }
   }, [router.pathname]);
 
   function handleLogout() {
     if (typeof window !== "undefined") {
+      localStorage.removeItem('lab-logged-in');
+      localStorage.removeItem('lab-password');
       document.cookie = 'lab-access=; path=/; max-age=0';
       setLoggedIn(false);
       router.push("/login");

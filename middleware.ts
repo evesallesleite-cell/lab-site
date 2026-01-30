@@ -1,31 +1,22 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Simple password protection - change this to your preferred passcode
-const SITE_PASSWORD = 'eve123';
-
 export function middleware(request: NextRequest) {
-  // Only protect production deployments
-  if (process.env.NODE_ENV !== 'production') {
+  const path = request.nextUrl.pathname;
+  
+  // Allow login page and static assets
+  if (path === '/login' || path.startsWith('/_next') || path.startsWith('/static')) {
     return NextResponse.next();
   }
-
-  // Check if user has the password cookie
+  
+  // Check for auth cookie
   const hasCookie = request.cookies.get('lab-access');
-
-  // Allow access to login page
-  if (request.nextUrl.pathname === '/login') {
-    if (hasCookie?.value === SITE_PASSWORD) {
-      return NextResponse.redirect(new URL('/home', request.url));
-    }
-    return NextResponse.next();
-  }
-
-  // Redirect to login if no valid cookie
-  if (!hasCookie || hasCookie.value !== SITE_PASSWORD) {
+  
+  // If no cookie, redirect to login
+  if (!hasCookie) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
-
+  
   return NextResponse.next();
 }
 
