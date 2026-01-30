@@ -427,44 +427,6 @@ export default function Whoop() {
               </div>
             )}
 
-              {/* Sleep Score Card */}
-              {latestSleep && (
-                <div className="bg-white rounded-lg shadow p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">Sleep Score</p>
-                      <p className="text-3xl font-bold text-purple-600">
-                        {Math.round(latestSleep.sleep_performance_percentage * 100)}%
-                      </p>
-                    </div>
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                      <span className="text-purple-600 text-xl">😴</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">Last night</p>
-                </div>
-              )}
-
-              {/* Resting Heart Rate Card */}
-              {latestRecovery && (
-                <div className="bg-white rounded-lg shadow p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">Resting HR</p>
-                      <p className="text-3xl font-bold text-red-600">
-                        {latestRecovery.resting_heart_rate}
-                      </p>
-                      <p className="text-sm text-gray-500">bpm</p>
-                    </div>
-                    <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                      <span className="text-red-600 text-xl">💓</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">Latest measurement</p>
-                </div>
-              )}
-            </div>
-
             {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               
