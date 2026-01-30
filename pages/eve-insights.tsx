@@ -132,7 +132,7 @@ export default function EveInsights() {
 
     // Blood test follow-up
     if (bloodTests.lastCollectedDate) {
-      const daysSince = Math.floor((Date.now() - new Date(bloodTests.lastCollectedDate)) / (1000 * 60 * 60 * 24));
+      const daysSince = Math.floor((Date.now() - new Date(bloodTests.lastCollectedDate!).getTime()) / (1000 * 60 * 60 * 24));
       
       newInsights.push({
         id: 'blood-test-freshness',
@@ -156,7 +156,7 @@ export default function EveInsights() {
           type: 'concern',
           title: 'Recovery Protocol Suggestion',
           description: `${lowRecoveryDays} days with recovery below 33% recently. This may indicate accumulated fatigue or stress.`,
-          recommendation: 'Consider deload week, prioritize sleep, and ensure nutrition supports recovery (glycine, tart cherry, magnesium).`
+          recommendation: `Consider deload week, prioritize sleep, and ensure nutrition supports recovery (glycine, tart cherry, magnesium).`
         });
       }
     }
