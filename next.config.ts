@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
+  // trailingSlash: true, // Disabled - breaks API POST requests
 };
 
 export default nextConfig;
