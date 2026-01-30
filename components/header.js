@@ -100,6 +100,7 @@ export default function Header() {
       {loggedIn && (
       <nav style={navStyle}>
         <Link href="/home" style={{ ...linkStyle, fontWeight: 600 }}>Home</Link>
+        <Link href="/health/integration" style={linkStyle}>🔗 Health</Link>
         <Link href="/medical/body" style={linkStyle}>Body</Link>
         
         <Link href="/supplement-stack" style={linkStyle}>
