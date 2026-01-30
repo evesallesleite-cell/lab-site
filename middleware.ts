@@ -30,5 +30,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|public).*)'],
+  matcher: ['/home/:path*', '/whoop/:path*', '/blood-tests/:path*', '/medical/:path*', '/supplement-stack/:path*', '/data-management/:path*'],
 };
