@@ -17,7 +17,7 @@ export default function LoginPage() {
 
     if (res.ok) {
       // Set cookie and redirect
-      document.cookie = 'lab-access=lab2024; path=/; max-age=31536000'; // 1 year
+      document.cookie = 'lab-access=eve123; path=/; max-age=31536000'; // 1 year
       router.push('/home');
     } else {
       setError('Invalid password');
@@ -30,7 +30,7 @@ export default function LoginPage() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+      background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
       fontFamily: 'Arial, sans-serif'
     }}>
       <div style={{
@@ -75,7 +75,7 @@ export default function LoginPage() {
               padding: '12px',
               borderRadius: '8px',
               background: 'white',
-              color: '#059669',
+              color: '#991b1b',
               border: 'none',
               cursor: 'pointer',
               fontSize: '1rem',

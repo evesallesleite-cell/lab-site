@@ -11,15 +11,18 @@ export default function Header() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setLoggedIn(localStorage.getItem("loggedIn") === "true");
+      // Check cookie for authentication (same as middleware)
+      const cookies = document.cookie.split(';');
+      const hasLabAccess = cookies.some(c => c.trim().startsWith('lab-access=eve123'));
+      setLoggedIn(hasLabAccess);
     }
   }, [router.pathname]);
 
   function handleLogout() {
     if (typeof window !== "undefined") {
-      localStorage.removeItem("loggedIn");
+      document.cookie = 'lab-access=; path=/; max-age=0';
       setLoggedIn(false);
-      router.push("/");
+      router.push("/login");
     }
   }
 
@@ -93,6 +96,7 @@ export default function Header() {
 
   return (
     <header style={headerStyle}>
+      {loggedIn && (
       <nav style={navStyle}>
         <Link href="/home" style={{ ...linkStyle, fontWeight: 600 }}>Home</Link>
         <Link href="/data-management/upload" style={linkStyle}>Upload</Link>
@@ -121,7 +125,7 @@ export default function Header() {
             <Link 
               href="/blood-tests/lipids" 
               style={dropdownLinkStyle}
-              onMouseDown={(e) => e.preventDefault()} // Prevent blur before click
+              onMouseDown={(e) => e.preventDefault()}
             >
               Lipids
             </Link>
@@ -166,14 +170,14 @@ export default function Header() {
               style={dropdownLinkStyle}
               onMouseDown={(e) => e.preventDefault()}
             >
-              🦠 Digestive System Analysis
+              Digestive System Analysis
             </Link>
             <Link 
               href="/medical/simple-pdf" 
               style={dropdownLinkStyle}
               onMouseDown={(e) => e.preventDefault()}
             >
-              � Simple PDF Extractor
+              Simple PDF Extractor
             </Link>
           </div>
         </div>
@@ -193,7 +197,7 @@ export default function Header() {
             <Link 
               href="/whoop/sleep" 
               style={dropdownLinkStyle}
-              onMouseDown={(e) => e.preventDefault()} // Prevent blur before click
+              onMouseDown={(e) => e.preventDefault()}
             >
               Sleep
             </Link>
@@ -214,6 +218,7 @@ export default function Header() {
           </div>
         </div>
       </nav>
+      )}
 
       <div>
         {loggedIn ? (
@@ -221,7 +226,7 @@ export default function Header() {
             Logout
           </button>
         ) : (
-          <Link href="/" style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid #ddd", textDecoration: "none" }}>
+          <Link href="/login" style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid #ddd", textDecoration: "none" }}>
             Login
           </Link>
         )}
