@@ -80,11 +80,14 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1rem' }}>
           <input
+            id="password-input"
+            name="password"
             type="password"
             placeholder="Access code"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
+            autoComplete="current-password"
             style={{
               padding: '14px 16px',
               borderRadius: '10px',
@@ -94,7 +97,7 @@ export default function LoginPage() {
               fontSize: '1.1rem',
               outline: 'none',
               textAlign: 'center',
-              opacity: loading ? 0.7 : 1
+              opacity: loading ? 0.8 : 1
             }}
           />
           
@@ -112,18 +115,21 @@ export default function LoginPage() {
           )}
           
           <button 
+            id="submit-button"
+            name="submit"
             type="submit" 
             disabled={loading || !password}
             style={{
               padding: '14px',
               borderRadius: '10px',
-              background: loading ? 'rgba(255,255,255,0.5)' : 'white',
+              background: 'white',
               color: '#4b5563',
               border: 'none',
               cursor: loading ? 'not-allowed' : 'pointer',
               fontSize: '1rem',
               fontWeight: 'bold',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              opacity: loading ? 0.7 : 1
             }}
           >
             {loading ? 'Verifying...' : 'Enter 🔐'}
