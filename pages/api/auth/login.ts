@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 // Simple password protection - change this to your preferred passcode
-const SITE_PASSWORD = 'lab2024';
+const SITE_PASSWORD = 'eve123';
 
 export async function POST(request: Request) {
   try {

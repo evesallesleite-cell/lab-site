@@ -16,8 +16,7 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      // Set cookie and redirect
-      document.cookie = 'lab-access=eve123; path=/; max-age=31536000'; // 1 year
+      // Server sets the cookie, just redirect
       router.push('/home');
     } else {
       setError('Invalid password');
