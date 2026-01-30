@@ -218,13 +218,15 @@ export default function HomePage() {
                   gap: "0.75rem"
                 }}>
                   <div style={{
-                    background: slot.bg || "#f1f5f9",
+                    background: slot.color ? `${slot.color}15` : "#f1f5f9",
+                    color: slot.color || "#475569",
                     padding: "0.5rem 0.75rem",
                     borderRadius: 8,
                     minWidth: "100px",
-                    textAlign: "center"
+                    textAlign: "center",
+                    borderLeft: slot.color ? `3px solid ${slot.color}` : "none"
                   }}>
-                    <span style={{ fontSize: "0.8rem", color: "#475569" }}>{slot.time}</span>
+                    <span style={{ fontSize: "0.8rem", fontWeight: 500 }}>{slot.time.split(" ")[0]}</span>
                   </div>
                   <div style={{ flex: 1, display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                     {slot.items.map(item => (
