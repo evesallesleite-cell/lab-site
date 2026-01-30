@@ -4,6 +4,10 @@ import { NextResponse } from 'next/server';
 const SITE_PASSWORD = 'eve123';
 
 export async function POST(request: Request) {
+  if (request.method !== 'POST') {
+    return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+  }
+  
   try {
     const body = await request.json();
     const { password } = body;
@@ -24,6 +28,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
   } catch (error) {
+    console.error('Login error:', error);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }
 }
