@@ -119,7 +119,7 @@ export default function Whoop() {
         {whoopData && (
           <div className="space-y-6">
             
-            {/* DEBUG: Raw data display */}
+            {}
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <h2 className="text-lg font-semibold text-green-800 mb-2">🎉 SUCCESS! Your Enhanced Dashboard is Working!</h2>
               <div className="text-sm text-green-700">
@@ -132,12 +132,12 @@ export default function Whoop() {
               </div>
             </div>
 
-            {/* Data Status Overview */}
+            {}
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">📊 Data Availability Status</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 
-                {/* Profile Status */}
+                {}
                 <div className="flex items-center p-3 rounded-lg bg-gray-50">
                   <div className="flex-1">
                     <div className="text-sm font-medium text-gray-900">Profile</div>
@@ -152,7 +152,7 @@ export default function Whoop() {
                   </div>
                 </div>
 
-                {/* Measurements Status */}
+                {}
                 <div className="flex items-center p-3 rounded-lg bg-gray-50">
                   <div className="flex-1">
                     <div className="text-sm font-medium text-gray-900">Body Measurements</div>
@@ -167,7 +167,7 @@ export default function Whoop() {
                   </div>
                 </div>
 
-                {/* Recovery Status */}
+                {}
                 <div className="flex items-center p-3 rounded-lg bg-gray-50">
                   <div className="flex-1">
                     <div className="text-sm font-medium text-gray-900">Recovery Data</div>
@@ -186,7 +186,7 @@ export default function Whoop() {
                   </div>
                 </div>
 
-                {/* Sleep Status */}
+                {}
                 <div className="flex items-center p-3 rounded-lg bg-gray-50">
                   <div className="flex-1">
                     <div className="text-sm font-medium text-gray-900">Sleep Data</div>
@@ -208,10 +208,10 @@ export default function Whoop() {
               </div>
             </div>
 
-            {/* Summary Cards Row - Recovery/Sleep Data */}
+            {}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               
-              {/* Recovery Score Card */}
+              {}
               {latestRecovery ? (
                 <div className="bg-white rounded-lg shadow p-6">
                   <div className="flex items-center justify-between">
@@ -243,7 +243,7 @@ export default function Whoop() {
                 </div>
               )}
 
-              {/* HRV Card */}
+              {}
               {latestRecovery ? (
                 <div className="bg-white rounded-lg shadow p-6">
                   <div className="flex items-center justify-between">
@@ -276,7 +276,7 @@ export default function Whoop() {
                 </div>
               )}
 
-              {/* Sleep Score Card */}
+              {}
               {latestSleep ? (
                 <div className="bg-white rounded-lg shadow p-6">
                   <div className="flex items-center justify-between">
@@ -308,7 +308,7 @@ export default function Whoop() {
                 </div>
               )}
 
-              {/* Resting Heart Rate Card */}
+              {}
               {latestRecovery ? (
                 <div className="bg-white rounded-lg shadow p-6">
                   <div className="flex items-center justify-between">
@@ -343,13 +343,13 @@ export default function Whoop() {
 
             </div>
 
-            {/* Available Data Cards - Profile & Measurements */}
+            {}
             {(whoopData.profile || whoopData.measurements?.body?.length > 0) && (
               <div>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">📋 Available Profile Data</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   
-                  {/* User ID Card */}
+                  {}
                   {whoopData.profile && (
                     <div className="bg-white rounded-lg shadow p-6">
                       <div className="flex items-center justify-between">
@@ -367,7 +367,7 @@ export default function Whoop() {
                     </div>
                   )}
 
-                  {/* Height Card */}
+                  {}
                   {whoopData.measurements?.body?.[0]?.height_meter && (
                     <div className="bg-white rounded-lg shadow p-6">
                       <div className="flex items-center justify-between">
@@ -386,7 +386,7 @@ export default function Whoop() {
                     </div>
                   )}
 
-                  {/* Weight Card */}
+                  {}
                   {whoopData.measurements?.body?.[0]?.weight_kilogram && (
                     <div className="bg-white rounded-lg shadow p-6">
                       <div className="flex items-center justify-between">
@@ -405,7 +405,7 @@ export default function Whoop() {
                     </div>
                   )}
 
-                  {/* BMI Card (calculated) */}
+                  {}
                   {whoopData.measurements?.body?.[0]?.height_meter && whoopData.measurements?.body?.[0]?.weight_kilogram && (
                     <div className="bg-white rounded-lg shadow p-6">
                       <div className="flex items-center justify-between">
@@ -427,7 +427,7 @@ export default function Whoop() {
               </div>
             )}
 
-              {/* Sleep Score Card */}
+              {}
               {latestSleep && (
                 <div className="bg-white rounded-lg shadow p-6">
                   <div className="flex items-center justify-between">
@@ -445,7 +445,7 @@ export default function Whoop() {
                 </div>
               )}
 
-              {/* Resting Heart Rate Card */}
+              {}
               {latestRecovery && (
                 <div className="bg-white rounded-lg shadow p-6">
                   <div className="flex items-center justify-between">
@@ -465,10 +465,9 @@ export default function Whoop() {
               )}
             </div>
 
-            {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               
-              {/* Recovery Trends Chart */}
+              
               {recoveryChartData.length > 0 && (
                 <div className="bg-white rounded-lg shadow p-6">
                   <h3 className="text-lg font-semibold mb-4 text-gray-900">Recovery & HRV Trends (7 Days)</h3>
@@ -486,7 +485,7 @@ export default function Whoop() {
                 </div>
               )}
 
-              {/* Sleep Quality Chart */}
+              {}
               {sleepChartData.length > 0 && (
                 <div className="bg-white rounded-lg shadow p-6">
                   <h3 className="text-lg font-semibold mb-4 text-gray-900">Sleep Quality Trends (7 Days)</h3>
@@ -505,7 +504,7 @@ export default function Whoop() {
               )}
             </div>
 
-            {/* Sleep Stages Chart */}
+            {}
             {sleepChartData.length > 0 && (
               <div className="bg-white rounded-lg shadow p-6">
                 <h3 className="text-lg font-semibold mb-4 text-gray-900">Sleep Stages Breakdown (7 Days)</h3>
@@ -523,7 +522,7 @@ export default function Whoop() {
               </div>
             )}
 
-            {/* Profile Card */}
+            {}
             {whoopData.profile && (
               <div className="bg-white rounded-lg shadow p-6">
                 <h2 className="text-xl font-semibold mb-4 text-gray-900">Profile</h2>
@@ -544,7 +543,7 @@ export default function Whoop() {
               </div>
             )}
 
-            {/* Body Measurements Card */}
+            {}
             {whoopData.measurements && (
               <div className="bg-white rounded-lg shadow p-6">
                 <h2 className="text-xl font-semibold mb-4 text-gray-900">Body Measurements</h2>
@@ -577,7 +576,7 @@ export default function Whoop() {
               </div>
             )}
 
-            {/* Data Timestamp */}
+            {}
             <div className="text-center text-sm text-gray-500">
               Data last updated: {formatDate(whoopData.fetchedAt)} at {formatTime(whoopData.fetchedAt)}
             </div>
