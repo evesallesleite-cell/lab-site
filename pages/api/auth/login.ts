@@ -3,7 +3,9 @@ import { NextResponse } from 'next/server';
 // Simple password protection - change this to your preferred passcode
 const SITE_PASSWORD = 'eve123';
 
-export async function POST(request: Request) {
+export const runtime = 'edge';
+
+export default async function handler(request: Request) {
   if (request.method !== 'POST') {
     return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
   }
@@ -18,8 +20,8 @@ export async function POST(request: Request) {
       // Set the access cookie for 1 year
       response.cookies.set('lab-access', SITE_PASSWORD, {
         path: '/',
-        maxAge: 60 * 60 * 24 * 365, // 1 year
-        httpOnly: false, // Allow JavaScript access for easier debugging
+        maxAge: 60 * 60 * 24 * 365,
+        httpOnly: false,
         sameSite: 'lax',
       });
 
