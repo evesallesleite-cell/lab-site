@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
+const VERSION = '1.0.0';
+
 export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -56,7 +58,7 @@ export default function LoginPage() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%)',
+      background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
       fontFamily: 'Arial, sans-serif'
     }}>
       <div style={{
@@ -127,6 +129,15 @@ export default function LoginPage() {
             {loading ? 'Verifying...' : 'Enter 🔐'}
           </button>
         </form>
+        
+        <div style={{ 
+          marginTop: '1.5rem', 
+          textAlign: 'center', 
+          color: 'rgba(255,255,255,0.6)', 
+          fontSize: '0.8rem' 
+        }}>
+          Version {VERSION}
+        </div>
       </div>
     </div>
   );
