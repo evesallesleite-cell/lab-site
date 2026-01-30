@@ -29,7 +29,7 @@ export default function LoginPage() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+      background: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
       fontFamily: 'Arial, sans-serif'
     }}>
       <div style={{
@@ -66,7 +66,7 @@ export default function LoginPage() {
             }}
           />
           {error && (
-            <div style={{ color: '#ff6b6b', textAlign: 'center' }}>{error}</div>
+            <div style={{ color: '#fee2e2', textAlign: 'center', background: 'rgba(220,38,38,0.3)', padding: '8px', borderRadius: '8px' }}>{error}</div>
           )}
           <button 
             type="submit" 
@@ -74,7 +74,7 @@ export default function LoginPage() {
               padding: '12px',
               borderRadius: '8px',
               background: 'white',
-              color: '#991b1b',
+              color: '#0891b2',
               border: 'none',
               cursor: 'pointer',
               fontSize: '1rem',
