@@ -30,7 +30,7 @@ export default function LoginPage() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
       fontFamily: 'Arial, sans-serif'
     }}>
       <div style={{
@@ -44,7 +44,7 @@ export default function LoginPage() {
         width: '90%'
       }}>
         <h1 style={{ color: 'white', marginBottom: '1rem', textAlign: 'center' }}>
-          🔬 Lab Site Access
+          Lab Site Access
         </h1>
         <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', textAlign: 'center' }}>
           Enter the access code to view your health data
@@ -75,7 +75,7 @@ export default function LoginPage() {
               padding: '12px',
               borderRadius: '8px',
               background: 'white',
-              color: '#667eea',
+              color: '#059669',
               border: 'none',
               cursor: 'pointer',
               fontSize: '1rem',
