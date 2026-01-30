@@ -1,8 +1,24 @@
 import fs from "fs";
 import path from "path";
-import { parse } from "csv-parse/sync";
 
 const WHOOP_DATA_PATH = process.env.WHOOP_DATA_PATH || path.join(process.cwd(), "..", "clawd", "health-data", "whoop");
+
+// Simple CSV parser
+function parseCSV(content) {
+  const lines = content.trim().split('\n');
+  if (lines.length < 2) return [];
+  
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+  
+  return lines.slice(1).map(line => {
+    const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+    const record = {};
+    headers.forEach((header, i) => {
+      record[header] = values[i] || '';
+    });
+    return record;
+  });
+}
 
 export default async function handler(req, res) {
   try {
@@ -14,12 +30,7 @@ export default async function handler(req, res) {
     }
 
     const fileContent = fs.readFileSync(sleepsPath, "utf-8");
-    
-    // Parse CSV
-    const records = parse(fileContent, {
-      columns: true,
-      skip_empty_lines: true
-    });
+    const records = parseCSV(fileContent);
 
     // Parse dates and format data
     const sleepData = records.map((record, index) => {
@@ -32,23 +43,35 @@ export default async function handler(req, res) {
         }
       };
 
+      const parseInt = (val) => {
+        if (!val) return null;
+        const num = parseFloat(val);
+        return isNaN(num) ? null : Math.round(num);
+      };
+
+      const parseFloat = (val) => {
+        if (!val) return null;
+        const num = parseFloat(val);
+        return isNaN(num) ? null : num;
+      };
+
       return {
         id: index,
         cycleStartTime: parseDate(record["Cycle start time"]),
         sleepOnset: parseDate(record["Sleep onset"]),
         wakeOnset: parseDate(record["Wake onset"]),
-        sleepPerformance: record["Sleep performance %"] ? parseFloat(record["Sleep performance %"]) : null,
-        respiratoryRate: record["Respiratory rate (rpm)"] ? parseFloat(record["Respiratory rate (rpm)"]) : null,
-        asleepDuration: record["Asleep duration (min)"] ? parseInt(record["Asleep duration (min)"]) : null,
-        inBedDuration: record["In bed duration (min)"] ? parseInt(record["In bed duration (min)"]) : null,
-        lightDuration: record["Light sleep duration (min)"] ? parseInt(record["Light sleep duration (min)"]) : null,
-        deepDuration: record["Deep (SWS) duration (min)"] ? parseInt(record["Deep (SWS) duration (min)"]) : null,
-        remDuration: record["REM duration (min)"] ? parseInt(record["REM duration (min)"]) : null,
-        awakeDuration: record["Awake duration (min)"] ? parseInt(record["Awake duration (min)"]) : null,
-        sleepNeed: record["Sleep need (min)"] ? parseInt(record["Sleep need (min)"]) : null,
-        sleepDebt: record["Sleep debt (min)"] ? parseInt(record["Sleep debt (min)"]) : null,
-        sleepEfficiency: record["Sleep efficiency %"] ? parseFloat(record["Sleep efficiency %"]) : null,
-        sleepConsistency: record["Sleep consistency %"] ? parseFloat(record["Sleep consistency %"]) : null,
+        sleepPerformance: parseFloat(record["Sleep performance %"]),
+        respiratoryRate: parseFloat(record["Respiratory rate (rpm)"]),
+        asleepDuration: parseInt(record["Asleep duration (min)"]),
+        inBedDuration: parseInt(record["In bed duration (min)"]),
+        lightDuration: parseInt(record["Light sleep duration (min)"]),
+        deepDuration: parseInt(record["Deep (SWS) duration (min)"]),
+        remDuration: parseInt(record["REM duration (min)"]),
+        awakeDuration: parseInt(record["Awake duration (min)"]),
+        sleepNeed: parseInt(record["Sleep need (min)"]),
+        sleepDebt: parseInt(record["Sleep debt (min)"]),
+        sleepEfficiency: parseFloat(record["Sleep efficiency %"]),
+        sleepConsistency: parseFloat(record["Sleep consistency %"]),
         isNap: record["Nap"] === "true"
       };
     });
