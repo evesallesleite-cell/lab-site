@@ -2,9 +2,30 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+const VERSION = "1.0.0";
+
 export default function HomePage() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [healthData, setHealthData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  // Today's supplements by time
+  const todaysSupplements = [
+    { time: "🌅 Pre-Breakfast", items: ["B6+B9+B12", "Magnesium", "Taurine", "NAC", "NMN"], color: "#f97316" },
+    { time: "🍳 Breakfast", items: ["Testofen", "CDP-Choline", "Lion's Mane", "Omega-3", "Collagen"], color: "#22c55e" },
+    { time: "🔥 Pre-Workout", items: ["Beta-Alanine", "Creatine", "L-Citrulline", "Vinitrox"], color: "#ef4444" },
+    { time: "💪 Post-Workout", items: ["Whey Protein"], color: "#ec4899" },
+    { time: "🌙 Before Bed", items: ["Tart Cherry", "Glycine"], color: "#6366f1" }
+  ];
+
+  // Quick stats (would come from API in real app)
+  const stats = {
+    weight: { value: 69.7, unit: "kg", change: -0.5 },
+    sleep: { value: 7.2, unit: "hrs", quality: 87 },
+    recovery: { value: 72, unit: "%" },
+    strain: { value: 15.2, unit: "" }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -12,188 +33,331 @@ export default function HomePage() {
       setLoggedIn(isLoggedIn);
       if (!isLoggedIn) {
         router.replace("/login");
+      } else {
+        // Load integrated health data
+        fetch("/api/health/integrated")
+          .then(res => res.json())
+          .then(data => {
+            setHealthData(data);
+            setLoading(false);
+          })
+          .catch(() => setLoading(false));
       }
     }
   }, [router]);
 
-  const categories = [
-    {
-      title: "Whoop Data",
-      description: "Sleep, strain, and recovery insights from your Whoop device",
-      icon: "⌚",
-      color: "from-blue-500 to-blue-600",
-      items: [
-        { name: "Sleep", href: "/whoop/sleep", description: "Sleep stages, efficiency, and quality metrics" },
-        { name: "Strain", href: "/whoop/strain", description: "Daily strain scores and workout analysis" },
-        { name: "Recovery", href: "/whoop/recovery", description: "Recovery scores and readiness metrics" }
-      ]
-    },
-    {
-      title: "Blood Test Results",
-      description: "Comprehensive lab results and AI-powered insights",
-      icon: "🔬",
-      color: "from-red-500 to-red-600",
-      items: [
-        { name: "Lipids", href: "/blood-tests/lipids", description: "Cholesterol, HDL, LDL, triglycerides analysis" },
-        { name: "Hormones", href: "/blood-tests/hormones", description: "Hormone levels and endocrine system health" },
-        { name: "Upload Data", href: "/data-management/upload", description: "Upload new lab results and blood test data" }
-      ]
-    },
-    {
-      title: "Specialized Reports",
-      description: "Advanced metabolic and digestive health analysis",
-      icon: "🧬",
-      color: "from-purple-500 to-purple-600",
-      items: [
-        { name: "Metabolomics", href: "/blood-tests/metabolomics", description: "Comprehensive metabolite analysis and pathways" },
-        { name: "LifeCode", href: "/medical/lifecode", description: "Genetic insights and personalized recommendations" },
-        { name: "Digestive System", href: "/medical/digestive-unified", description: "Gut health and microbiome analysis" }
-      ]
-    },
-    {
-      title: "Physical Metrics",
-      description: "Body composition and physical health tracking",
-      icon: "📊",
-      color: "from-green-500 to-green-600",
-      items: [
-        { name: "Body Metrics", href: "/medical/body", description: "Physical measurements and body composition" }
-      ]
-    },
-    {
-      title: "Supplements & Nutrition",
-      description: "Daily supplement regimen and nutritional support",
-      icon: "💊",
-      color: "from-orange-500 to-orange-600",
-      items: [
-        { name: "Supplement Stack", href: "/supplement-stack", description: "Complete daily supplement regimen with dosages, timing, and benefits" }
-      ]
-    }
-  ];
-
   if (!loggedIn) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Checking authentication...</p>
+    return (
+      <div style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
+        fontFamily: "Inter, sans-serif"
+      }}>
+        <div style={{ textAlign: "center", color: "white" }}>
+          <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>🔒</div>
+          <p>Checking authentication...</p>
+        </div>
       </div>
-    </div>;
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div style={{
+      minHeight: "100vh",
+      background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+      fontFamily: "Inter, system-ui, sans-serif"
+    }}>
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Health Dashboard</h1>
-              <p className="text-gray-600 mt-1">Your comprehensive health and wellness hub</p>
-            </div>
-            <button 
-              onClick={() => {
-                localStorage.removeItem("lab-logged-in");
-                router.replace("/login");
-              }}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
-            >
-              Logout
-            </button>
-          </div>
+      <div style={{
+        background: "white",
+        borderBottom: "1px solid #e2e8f0",
+        padding: "1rem 2rem",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        position: "sticky",
+        top: 0,
+        zIndex: 100
+      }}>
+        <div>
+          <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#0f172a" }}>🔗 Health Hub</h1>
+          <p style={{ fontSize: "0.85rem", color: "#64748b" }}>Integrated health dashboard</p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <Link href="/health/integration" style={{
+            padding: "0.5rem 1rem",
+            background: "#f1f5f9",
+            color: "#475569",
+            borderRadius: 8,
+            textDecoration: "none",
+            fontSize: "0.9rem"
+          }}>
+            📊 Full Report
+          </Link>
+          <button
+            onClick={() => {
+              localStorage.removeItem("lab-logged-in");
+              router.replace("/login");
+            }}
+            style={{
+              padding: "0.5rem 1rem",
+              background: "#f1f5f9",
+              color: "#475569",
+              border: "none",
+              borderRadius: 8,
+              cursor: "pointer"
+            }}
+          >
+            Logout
+          </button>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Welcome to Your Health Hub</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Access your sleep data, strain metrics, lab results, and health insights all in one place. 
-            Click on any category below to explore your data.
-          </p>
-        </div>
-
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
-          {categories.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              {/* Category Header */}
-              <div className={`bg-gradient-to-r ${category.color} p-6 text-white`}>
-                <div className="flex items-center space-x-3">
-                  <span className="text-3xl">{category.icon}</span>
-                  <div>
-                    <h3 className="text-xl font-bold">{category.title}</h3>
-                    <p className="text-white/90 text-sm">{category.description}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Category Items */}
-              <div className="p-6 space-y-3">
-                {category.items.map((item, itemIndex) => (
-                  <Link
-                    key={itemIndex}
-                    href={item.href}
-                    className="block group"
-                  >
-                    <div className="p-4 rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 group-hover:shadow-md">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                            {item.name}
-                          </h4>
-                          <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                        </div>
-                        <svg 
-                          className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "2rem" }}>
+        {/* Quick Stats Row */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          gap: "1rem",
+          marginBottom: "2rem"
+        }}>
+          {/* Weight */}
+          <div style={{
+            background: "white",
+            borderRadius: 16,
+            padding: "1.25rem",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+          }}>
+            <div style={{ fontSize: "0.85rem", color: "#64748b", marginBottom: "0.5rem" }}>⚖️ Weight</div>
+            <div style={{ fontSize: "1.75rem", fontWeight: 700, color: "#0f172a" }}>
+              {stats.weight.value} <span style={{ fontSize: "1rem", color: "#64748b" }}>{stats.weight.unit}</span>
             </div>
-          ))}
-        </div>
-
-        {/* Quick Stats or Additional Info */}
-        <div className="mt-16 bg-white rounded-2xl shadow-lg p-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Getting Started</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div className="space-y-2">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl">🔄</span>
-                </div>
-                <h4 className="font-semibold text-gray-900">Auto-Sync Data</h4>
-                <p className="text-sm text-gray-600">
-                  Your Whoop data syncs automatically. Visit any dashboard to see the latest metrics.
-                </p>
-              </div>
-              <div className="space-y-2">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl">📈</span>
-                </div>
-                <h4 className="font-semibold text-gray-900">AI Insights</h4>
-                <p className="text-sm text-gray-600">
-                  Get intelligent analysis of your health data with personalized recommendations.
-                </p>
-              </div>
-              <div className="space-y-2">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl">⚡</span>
-                </div>
-                <h4 className="font-semibold text-gray-900">Fast & Offline</h4>
-                <p className="text-sm text-gray-600">
-                  Browse your historical data instantly. Update only when you want fresh insights.
-                </p>
-              </div>
+            <div style={{
+              fontSize: "0.85rem",
+              color: stats.weight.change < 0 ? "#16a34a" : "#dc2626",
+              marginTop: "0.25rem"
+            }}>
+              {stats.weight.change < 0 ? "↓" : "↑"} {Math.abs(stats.weight.change)} kg
             </div>
           </div>
+
+          {/* Sleep */}
+          <div style={{
+            background: "white",
+            borderRadius: 16,
+            padding: "1.25rem",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+          }}>
+            <div style={{ fontSize: "0.85rem", color: "#64748b", marginBottom: "0.5rem" }}>😴 Sleep</div>
+            <div style={{ fontSize: "1.75rem", fontWeight: 700, color: "#0f172a" }}>
+              {stats.sleep.value} <span style={{ fontSize: "1rem", color: "#64748b" }}>{stats.sleep.unit}</span>
+            </div>
+            <div style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "0.25rem" }}>
+              Quality: {stats.sleep.quality}%
+            </div>
+          </div>
+
+          {/* Recovery */}
+          <div style={{
+            background: "white",
+            borderRadius: 16,
+            padding: "1.25rem",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+          }}>
+            <div style={{ fontSize: "0.85rem", color: "#64748b", marginBottom: "0.5rem" }}>🔋 Recovery</div>
+            <div style={{ fontSize: "1.75rem", fontWeight: 700, color: "#0f172a" }}>
+              {stats.recovery.value}<span style={{ fontSize: "1rem", color: "#64748b" }}>%</span>
+            </div>
+            <div style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "0.25rem" }}>
+              {stats.recovery.value >= 70 ? "✅ Ready" : stats.recovery.value >= 40 ? "⚠️ Moderate" : "❌ Low"}
+            </div>
+          </div>
+
+          {/* Strain */}
+          <div style={{
+            background: "white",
+            borderRadius: 16,
+            padding: "1.25rem",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+          }}>
+            <div style={{ fontSize: "0.85rem", color: "#64748b", marginBottom: "0.5rem" }}>💪 Strain</div>
+            <div style={{ fontSize: "1.75rem", fontWeight: 700, color: "#0f172a" }}>
+              {stats.strain.value}
+            </div>
+            <div style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "0.25rem" }}>
+              {stats.strain.value >= 14 ? "🔥 High" : stats.strain.value >= 10 ? " moderate" : " Low"}
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content Grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "1.5rem" }}>
+          
+1.5rem          {/* Today's Supplements */}
+          <div style={{
+            background: "white",
+            borderRadius: 16,
+            padding: "1.5rem",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+              <h2 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#0f172a" }}>💊 Today's Stack</h2>
+              <Link href="/supplement-stack" style={{ fontSize: "0.85rem", color: "#3b82f6", textDecoration: "none" }}>
+                View All →
+              </Link>
+            </div>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              {todaysSupplements.map(slot => (
+                <div key={slot.time} style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem"
+                }}>
+                  <div style={{
+                    background: slot.bg || "#f1f5f9",
+                    padding: "0.5rem 0.75rem",
+                    borderRadius: 8,
+                    minWidth: "100px",
+                    textAlign: "center"
+                  }}>
+                    <span style={{ fontSize: "0.8rem", color: "#475569" }}>{slot.time}</span>
+                  </div>
+                  <div style={{ flex: 1, display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                    {slot.items.map(item => (
+                      <span key={item} style={{
+                        padding: "0.25rem 0.5rem",
+                        background: "#f8fafc",
+                        border: "1px solid #e2e8f0",
+                        borderRadius: 6,
+                        fontSize: "0.8rem",
+                        color: "#475569"
+                      }}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div style={{
+            background: "white",
+            borderRadius: 16,
+            padding: "1.5rem",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+          }}>
+            <h2 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#0f172a", marginBottom: "1rem" }}>⚡ Quick Actions</h2>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <Link href="/blood-tests/upload" style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                padding: "1rem",
+                background: "#f0f9ff",
+                borderRadius: 12,
+                textDecoration: "none"
+              }}>
+                <span style={{ fontSize: "1.5rem" }}>📋</span>
+                <div>
+                  <div style={{ fontWeight: 500, color: "#0f172a" }}>Submit Bloodwork</div>
+                  <div style={{ fontSize: "0.85rem", color: "#64748b" }}>Send PDFs to Eve for analysis</div>
+                </div>
+              </Link>
+
+              <Link href="/health/integration" style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                padding: "1rem",
+                background: "#f0fdf4",
+                borderRadius: 12,
+                textDecoration: "none"
+              }}>
+                <span style={{ fontSize: "1.5rem" }}>📊</span>
+                <div>
+                  <div style={{ fontWeight: 500, color: "#0f172a" }}>Full Health Report</div>
+                  <div style={{ fontSize: "0.85rem", color: "#64748b" }}>Apple Health + Whoop integration</div>
+                </div>
+              </Link>
+
+              <Link href="/whoop/sleep" style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                padding: "1rem",
+                background: "#fefce8",
+                borderRadius: 12,
+                textDecoration: "none"
+              }}>
+                <span style={{ fontSize: "1.5rem" }}>😴</span>
+                <div>
+                  <div style={{ fontWeight: 500, color: "#0f172a" }}>Sleep Analysis</div>
+                  <div style={{ fontSize: "0.85rem", color: "#64748b" }}>Whoop sleep data & trends</div>
+                </div>
+              </Link>
+
+              <Link href="/medical/body" style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                padding: "1rem",
+                background: "#fdf2f8",
+                borderRadius: 12,
+                textDecoration: "none"
+              }}>
+                <span style={{ fontSize: "1.5rem" }}>📈</span>
+                <div>
+                  <div style={{ fontWeight: 500, color: "#0f172a" }}>Body Metrics</div>
+                  <div style={{ fontSize: "0.85rem", color: "#64748b" }}>Weight & composition tracking</div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Data Sources */}
+        <div style={{
+          marginTop: "2rem",
+          background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
+          borderRadius: 16,
+          padding: "1.5rem",
+          color: "white"
+        }}>
+          <h3 style={{ fontSize: "1rem", fontWeight: 600, marginBottom: "1rem" }}>📁 Connected Data Sources</h3>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ fontSize: "1.25rem" }}>🍎</span>
+              <span>Apple Health</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ fontSize: "1.25rem" }}>⌚</span>
+              <span>Whoop</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ fontSize: "1.25rem" }}>🔬</span>
+              <span>Lab Data</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ fontSize: "1.25rem" }}>💊</span>
+              <span>Supplements</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ fontSize: "1.25rem" }}>🤖</span>
+              <span>Eve AI</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Version */}
+        <div style={{ textAlign: "center", marginTop: "2rem", color: "#94a3b8", fontSize: "0.85rem" }}>
+          Version {VERSION} • Health Integration v1.0
         </div>
       </div>
     </div>
