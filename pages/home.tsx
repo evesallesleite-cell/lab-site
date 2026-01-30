@@ -8,10 +8,10 @@ export default function HomePage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+      const isLoggedIn = localStorage.getItem("lab-logged-in") === "true";
       setLoggedIn(isLoggedIn);
       if (!isLoggedIn) {
-        router.push("/");
+        router.replace("/login");
       }
     }
   }, [router]);
@@ -91,8 +91,8 @@ export default function HomePage() {
             </div>
             <button 
               onClick={() => {
-                localStorage.removeItem("loggedIn");
-                router.push("/");
+                localStorage.removeItem("lab-logged-in");
+                router.replace("/login");
               }}
               className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
             >
