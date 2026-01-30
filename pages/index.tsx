@@ -15,7 +15,7 @@ export default function IndexPage() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+      background: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
       fontFamily: 'Arial, sans-serif'
     }}>
       <div style={{
